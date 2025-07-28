@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <style>
-        body{
-            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-text-align: center;
-        }
-        #1{
-            align-items: ;
-        }
-    </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-   
-    <h1>Login</h1>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-6">Login</h1>
 
-    <% if (locals.error) { %>
-<p><%= error %></p>     
-    <% } %>
-    <form action="/user/login" method="post">
- 
-        <label id="2" for="">Email</label>
-        <input id="2" type="text" placeholder="example@gmail.com" name="email">
-        <label id="3" for="">Password</label>
-        <input id="3" type="text" placeholder="Enter password" name="password">
+        <% if (locals.error) { %>
+            <p class="text-red-500 mb-4 text-center"><%= error %></p>
+        <% } %>
 
-        <button type="submit">Login</button>
-    </form>
+        <form action="/user/login" method="post" class="space-y-4">
+            <div>
+                <label class="block font-medium">Email</label>
+                <input type="email" name="email" placeholder="example@gmail.com" required
+                    class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <div>
+                <label class="block font-medium">Password</label>
+                <input type="password" name="password" placeholder="Enter password" required
+                    class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+        </form>
+    </div>
 </body>
 </html>

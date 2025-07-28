@@ -1,23 +1,32 @@
-const express=require('express')
+const express = require('express');
+const router = express.Router();
+const URL = require('../models/url');
 
-const router=express.Router()
-const URL=require('../models/url')
+// ✅ Main Landing Page — no auth required
+router.get("/", (req, res) => {
+  res.render("main");
+});
 
-router.get('/',async(req,res)=>{
-    if(!req.user) return res.redirect()
-    const allurls=await URL.find({createdBy:req.user._id})
-    return res.render('home',{
-        urls:allurls
-    })
-})
+// ✅ Signup Page
+router.get('/signup', (req, res) => {
+  res.render('signup', { error: null });
+});
 
-router.get('/signup',async(req,res)=>{
-    return res.render('signup')
-})
+// ✅ Login Page
+router.get('/login', (req, res) => {
+  res.render('login', { error: null });
+});
 
-router.get('/login',async(req,res)=>{
-    return res.render('login')
-})
+// ✅ Authenticated User Home (URL dashboard)
+router.get('/home', async (req, res) => {
+  if (!req.user) return res.redirect('/login');
 
+  const allUrls = await URL.find({ createdBy: req.user._id });
+  res.render('home', {
+    urls: allUrls,
+    id: null,
+    error: null
+  });
+});
 
-module.exports=router
+module.exports = router;

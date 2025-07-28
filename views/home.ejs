@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h1>URL Shortner</h1>
-<% if (locals.id) { %>
-<p>URL Generated:http://localhost:8001/url/<%= id %></p> 
-<% } %>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <div class="max-w-4xl mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">URL Shortener</h1>
 
-<% if (locals.error) { %>
-    <p><%= error %></p>
- 
-<% } %>
-  
-  
-<form method="POST" action="/url">
-    <label for="">
-        Enter the URL 
-        <input type="text" placeholder="https://example.com" name="url">
-    </label>
-    <button type="submit">Generate</button>
-</form>
-<div>
-    <table>
-        <% if (locals.urls) { %>
-            <thead>
+        <% if (locals.id) { %>
+           <p>
+  URL Generated: 
+  <a href="http://localhost:8001/<%= id %>" target="_blank">
+    http://localhost:8001/<%= id %>
+  </a>
+</p>
 
-                <th>s.No</th>
-                <th>ShortId</th>
-                <th>redirectURL</th>
-                <th>totalClicks</th>
-            </thead>
-            <tbody>
-                <% urls.forEach((url,index)=> { %>
-                    <tr>
-
-                        <td><%= index+1 %></td>                 
-                        <td><%= url.shortId%></td>                 
-                        <td><%= url.redirectUrl %></td>                 
-                        <td><%=url.visitHistory.length%></td>                 
-                    </tr>
-                <% }) %>
-            </tbody>
-
-
-
-         
         <% } %>
-    </table>
-</div>
+
+        <% if (locals.error) { %>
+            <p  class="text-red-500 text-center mb-4"><%= error %></p>
+        <% } %>
+
+        <form method="POST" action="/url" class="flex flex-col sm:flex-row items-center gap-4 justify-center mb-8">
+            <input type="text" name="url" placeholder="https://example.com" required
+                class="w-full sm:w-2/3 px-4 py-2 border rounded shadow" />
+            <button type="submit"
+                class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Generate</button>
+        </form>
+
+        <% if (locals.urls) { %>
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto border border-gray-300 bg-white shadow-md rounded-lg">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="px-4 py-2">S.No</th>
+                            <th class="px-4 py-2">Short ID</th>
+                            <th class="px-4 py-2">Redirect URL</th>
+                            <th class="px-4 py-2">Total Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url, index) => { %>
+                            <tr class="border-t">
+                                <td class="px-4 py-2 text-center"><%= index + 1 %></td>
+                                <td class="px-4 py-2 text-center"><%= url.shortId %></td>
+                                <td class="px-4 py-2 text-center break-words"><%= url.redirectUrl %></td>
+                                <td class="px-4 py-2 text-center"><%= url.visitHistory.length %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </div>
 </body>
 </html>
